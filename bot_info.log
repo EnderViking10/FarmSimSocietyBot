@@ -1,0 +1,13 @@
+2024-11-29 10:54:04,626 - WARNING - PyNaCl is not installed, voice will NOT be supported
+2024-11-29 10:54:04,626 - INFO - logging in using static token
+2024-11-29 10:54:05,865 - INFO - Shard ID None has connected to Gateway (Session ID: 7259668b9a3fb556227895bca67b459e).
+2024-11-29 10:54:07,871 - INFO - Logged in as TEST#2082 (ID: 1219655857315385436)
+2024-11-29 10:54:07,873 - INFO - Database successfully initialized
+2024-11-29 11:01:36,647 - WARNING - PyNaCl is not installed, voice will NOT be supported
+2024-11-29 11:01:36,648 - INFO - logging in using static token
+2024-11-29 11:01:38,516 - WARNING - PyNaCl is not installed, voice will NOT be supported
+2024-11-29 11:01:38,517 - INFO - logging in using static token
+2024-11-29 11:01:39,521 - INFO - Shard ID None has connected to Gateway (Session ID: 54ff6d55c8f6f5e20f1a49b45107f7ae).
+2024-11-29 11:01:41,524 - INFO - Logged in as TEST#2082 (ID: 1219655857315385436)
+2024-11-29 11:01:41,526 - INFO - Database successfully initialized
+2024-11-29 11:02:33,309 - INFO - happy_erik : 1241035516762394779 changed to testaccounthappy : 1241035516762394779
