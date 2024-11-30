@@ -40,3 +40,6 @@ This is a discord bot used in the `FarmSim Society` FS community.
 
 - Log every command run
     - To channel
+- Transfer command
+  - Integrate with mod using xml and shit??
+

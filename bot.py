@@ -53,7 +53,7 @@ async def on_ready():
             except Exception as e:
                 print(f"Failed to load cog {cog_name}: {e}")
 
-    # await bot.tree.sync()
+    await bot.tree.sync()
 
 
 @bot.event

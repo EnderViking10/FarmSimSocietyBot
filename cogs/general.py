@@ -6,7 +6,7 @@ from bot import logger
 from utils.database import get_db, User, Bank, add_user
 
 
-class Greetings(commands.Cog):
+class General(commands.Cog):
     def __init__(self, bot):
         self.bot = bot
         self._last_member = None
@@ -39,4 +39,4 @@ class Greetings(commands.Cog):
 
 
 async def setup(bot):
-    await bot.add_cog(Greetings(bot))
+    await bot.add_cog(General(bot))

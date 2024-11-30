@@ -1,3 +1,4 @@
+import discord
 from discord.ext import commands
 
 from utils.database import Bank, get_db
@@ -5,15 +6,84 @@ from utils.database import Bank, get_db
 
 class Economy(commands.Cog):
     def __init__(self, bot):
-        self.bot = bot
+        self.bot: commands.Bot = bot
         self._last_member = None
 
     @commands.hybrid_command(name="bank", description="The bank command")
     async def bank(self, ctx: commands.Context):
         member = ctx.author
 
-        bank_account = Bank.get_bank(next(get_db), member.id)
-        await ctx.reply(f"Your balance is {bank_account.balance}", ephemeral=True)
+        bank_account = Bank.get_bank(next(get_db()), member.id)
+        if ctx.interaction:
+            await ctx.interaction.response.send_message(f"Your balance is {bank_account.balance}", ephemeral=True)
+        else:
+            await ctx.author.send(f"Your balance is {bank_account.balance}")
+
+    @commands.hybrid_group(name="transfer", description="Transfer money")
+    async def transfer(self, ctx: commands.Context):
+        if ctx.interaction:
+            await ctx.interaction.response.send_message("Use a subcommand to transfer money")
+        else:
+            await ctx.reply("Use a subcommand to transfer money")
+
+    @transfer.command(name="player", description="Transfer money to another player")
+    async def player(self, ctx: commands.Context, user: discord.User, amount: int):
+        db = next(get_db())
+        author = ctx.author
+        author_bank = Bank.get_bank(db, author.id)
+        user_bank = Bank.get_bank(db, user.id)
+
+        if user_bank is None:
+            if ctx.interaction:
+                await ctx.interaction.response.send_message(f"User {user.name} is not in the database", ephemeral=True)
+            else:
+                await author.send(f"User {user.name} is not in the database")
+            return
+
+        if author_bank.balance < amount:
+            if ctx.interaction:
+                await ctx.interaction.response.send_message(f"You have insufficient funds", ephemeral=True)
+            else:
+                await author.send(f"You have insufficient funds")
+            return
+
+        user_bank.balance += amount
+        author_bank.balance -= amount
+        db.commit()
+        db.close()
+
+        if ctx.interaction:
+            await ctx.interaction.response.send_message(f"{amount} has been transfer to {user.name}", ephemeral=True)
+        else:
+            await author.send(f"{amount} has been transfer to {user.name}")
+
+    @transfer.command(namer="server", description="Transfer money to a server")
+    async def server(self, ctx: commands.Context, server: int, farm_name: str, amount: int):
+        db = next(get_db())
+        author = ctx.author
+        author_bank = Bank.get_bank(db, author.id)
+
+        if author_bank.balance < amount:
+            if ctx.interaction:
+                await ctx.interaction.response.send_message(f"You have insufficient funds", ephemeral=True)
+            else:
+                await author.send(f"You have insufficient funds")
+            return
+
+        queue_channel = await self.bot.fetch_channel(1180281302533021729)
+        queue_message = discord.Embed(
+            title=f"Money Transfer",
+            color=discord.Color.red()
+        )
+        queue_message.add_field(name="Server", value=f"{server}")
+        queue_message.add_field(name="Farm Name", value=f"{farm_name}")
+        queue_message.add_field(name="Amount", value=f"{amount}")
+
+        await queue_channel.send(embed=queue_message)
+        if ctx.interaction:
+            await ctx.interaction.response.send_message(f"Transfer has been added to the queue", ephemeral=True)
+        else:
+            await author.send(f"Transfer has been added to the queue")
 
 
 async def setup(bot):
