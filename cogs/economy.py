@@ -1,7 +1,8 @@
 import discord
 from discord.ext import commands
 
-from utils.database import Bank, get_db
+from utils.database import Bank, Servers, get_db
+from utils.fssapi import FSSAPI
 
 
 class Economy(commands.Cog):
@@ -70,16 +71,14 @@ class Economy(commands.Cog):
                 await author.send(f"You have insufficient funds")
             return
 
-        queue_channel = await self.bot.fetch_channel(1180281302533021729)
-        queue_message = discord.Embed(
-            title=f"Money Transfer",
-            color=discord.Color.red()
-        )
-        queue_message.add_field(name="Server", value=f"{server}")
-        queue_message.add_field(name="Farm Name", value=f"{farm_name}")
-        queue_message.add_field(name="Amount", value=f"{amount}")
+        fss_api = FSSAPI("http://192.168.1.207:8000")
 
-        await queue_channel.send(embed=queue_message)
+        fss_api.send_command("add_money",
+                             {
+                                 "farm_name": farm_name,
+                                 "amount": amount
+                             })
+
         if ctx.interaction:
             await ctx.interaction.response.send_message(f"Transfer has been added to the queue", ephemeral=True)
         else:
