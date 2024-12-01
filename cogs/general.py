@@ -2,8 +2,7 @@ import discord
 from discord import Member, Guild
 from discord.ext import commands
 
-from bot import logger
-from utils.database import get_db, User, Bank, add_user
+from utils.database import get_db, User, add_user
 
 
 class General(commands.Cog):
@@ -35,7 +34,6 @@ class General(commands.Cog):
         if before.name == after.name:
             return
         User.update_username(next(get_db()), before.id, after.name)
-        logger.info(f"{before.name} : {before.id} changed to {after.name} : {after.id}")
 
 
 async def setup(bot):

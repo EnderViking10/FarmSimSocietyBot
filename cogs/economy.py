@@ -1,7 +1,7 @@
 import discord
 from discord.ext import commands
 
-from utils.database import Bank, Servers, get_db
+from utils.database import Bank, get_db
 from utils.fssapi import FSSAPI
 
 
