@@ -13,4 +13,5 @@
 /data/
 /.env
 
-/*.log
+/bot_errors.log
+/bot_info.log
