@@ -2,20 +2,35 @@
 
 This is a discord bot used in the `FarmSim Society` FS community.
 
+# Bot commands
+- ## Economy
+  - /bank - Shows users bank accont
+  - /transfer player user \<username\> amount \<amount\>
+  - /transfer server 
+
 # Database Schema
 
-- Users
+- users
     - id Integer Primary Key
     - username String
     - discord_id Integer
-    - join_date (DATETIME DEFAULT DATETIME NOW)
-- Bank
+    - join_date DATETIME DEFAULT DATETIME NOW
+    - farm_manager Boolean
+- bank
     - id INTEGER PRIMARY KEY
     - discord_id INTEGER FOREIGN KEY users(discord_id)
     - balance INTEGER default 10000
-- Servers
+- servers
   - id INTEGER PRIMARY KEY
   - ip String
+  - name String
+  - map String
+- user_servers
+  - user_id Integer
+  - server_id Integer
+  - PRIMARY KEY (user_id, server_id)
+  - FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+  - FOREIGN KEY (server_id) REFERENCES servers(id) ON DELETE CASCADE
 
 # Alembic commands
 ```shell
@@ -59,6 +74,4 @@ alembic history
 
 - Log every command run
     - To channel
-- Transfer command
-  - Integrate with mod using xml and shit??
-
+    - More verbose
