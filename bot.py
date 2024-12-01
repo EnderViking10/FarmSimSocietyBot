@@ -53,8 +53,6 @@ async def on_ready():
             except Exception as e:
                 print(f"Failed to load cog {cog_name}: {e}")
 
-    await bot.tree.sync()
-
 
 @bot.event
 async def on_command(ctx):
@@ -69,7 +67,6 @@ async def on_command_error(ctx, error):
         await ctx.send("Command not found. Type `!help` for a list of commands.")
     else:
         logger.error(f"Error in command {ctx.command}: {error}")
-        raise error
 
 
 if __name__ == "__main__":
