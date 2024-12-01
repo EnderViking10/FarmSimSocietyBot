@@ -13,6 +13,21 @@ This is a discord bot used in the `FarmSim Society` FS community.
     - id INTEGER PRIMARY KEY
     - discord_id INTEGER FOREIGN KEY users(discord_id)
     - balance INTEGER default 10000
+- Servers
+  - id INTEGER PRIMARY KEY
+  - ip String
+
+# Alembic commands
+```shell
+# Create new database revision
+alembic revision --autogenerate -m "Description"
+
+# Migrate to new revision
+alembic upgrade head
+
+# View history
+alembic history
+```
 
 # Requirements
 
