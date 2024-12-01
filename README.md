@@ -22,6 +22,8 @@ This is a discord bot used in the `FarmSim Society` FS community.
 - alembic==1.14.0
 - async-timeout==5.0.1
 - attrs==24.2.0
+- certifi==2024.8.30
+- charset-normalizer==3.4.0
 - discord.py==2.4.0
 - frozenlist==1.5.0
 - greenlet==3.1.1
@@ -32,8 +34,10 @@ This is a discord bot used in the `FarmSim Society` FS community.
 - propcache==0.2.0
 - PyMySQL==1.1.1
 - python-dotenv==1.0.1
+- requests==2.32.3
 - SQLAlchemy==2.0.36
 - typing_extensions==4.12.2
+- urllib3==2.2.3
 - yarl==1.18.0
 
 # Todo
